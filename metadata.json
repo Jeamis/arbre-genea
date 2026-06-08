@@ -1,0 +1,6 @@
+{
+  "name": "Arbre Généalogique",
+  "description": "Une application interactive pour créer et visualiser son arbre généalogique avec un backend Express et une interface React.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
