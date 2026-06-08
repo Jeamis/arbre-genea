@@ -27,72 +27,178 @@ const dbPath = path.join(dataDir, "membres.json");
 // Données de graine (seed) par défaut si le fichier n'existe pas
 const seedData: Membre[] = [
   {
-    id: "1",
-    prenom: "Jean",
-    nom: "Martin",
-    sexe: "M",
-    date_naissance: "1945-05-12",
-    lieu_naissance: "Lyon",
-    conjoint_id: "2"
+    "id": "1",
+    "prenom": "Paul",
+    "nom": "RAZANAKOLONA",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "conjoint_id": "2",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "2",
-    prenom: "Marie",
-    nom: "Dupond",
-    sexe: "F",
-    date_naissance: "1948-09-24",
-    lieu_naissance: "Paris",
-    conjoint_id: "1"
+    "id": "2",
+    "prenom": "Norovololona",
+    "nom": "RAJAOBELINA",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "conjoint_id": "1",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "3",
-    prenom: "Thomas",
-    nom: "Martin",
-    sexe: "M",
-    date_naissance: "1975-03-15",
-    lieu_naissance: "Paris",
-    pere_id: "1",
-    mere_id: "2",
-    conjoint_id: "4"
+    "id": "3",
+    "prenom": "Noroniaina",
+    "nom": "ANDRIAMASITERA",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "pere_id": "1",
+    "mere_id": "2",
+    "conjoint_id": "4",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "4",
-    prenom: "Sophie",
-    nom: "Martin",
-    sexe: "F",
-    date_naissance: "1978-08-30",
-    lieu_naissance: "Lille",
-    conjoint_id: "3"
+    "id": "4",
+    "prenom": "Chemir",
+    "nom": "JEAN MENSORALY",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "conjoint_id": "3",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "5",
-    prenom: "Catherine",
-    nom: "Martin",
-    sexe: "F",
-    date_naissance: "1980-11-04",
-    lieu_naissance: "Paris",
-    pere_id: "1",
-    mere_id: "2"
+    "id": "5",
+    "prenom": "Lamyah",
+    "nom": "RAZANAKOLONA JEAN MENSORALY",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "pere_id": "4",
+    "mere_id": "3",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "6",
-    prenom: "Lucas",
-    nom: "Martin",
-    sexe: "M",
-    date_naissance: "2005-07-22",
-    lieu_naissance: "Paris",
-    pere_id: "3",
-    mere_id: "4"
+    "id": "6",
+    "prenom": "Mael",
+    "nom": "RAZANAKOLONA JEAN MENSORALY",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "pere_id": "4",
+    "mere_id": "3",
+    "date_naissance": "",
+    "lieu_naissance": ""
   },
   {
-    id: "7",
-    prenom: "Léa",
-    nom: "Martin",
-    sexe: "F",
-    date_naissance: "2008-12-10",
-    lieu_naissance: "Lyon",
-    pere_id: "3",
-    mere_id: "4"
+    "id": "7",
+    "prenom": "Shayan",
+    "nom": "RAZANAKOLONA JEAN MENSORALY",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "pere_id": "4",
+    "mere_id": "3",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "8",
+    "prenom": "Narindraniaina",
+    "nom": "ANDRIAMASITERA",
+    "sexe": "F",
+    "photo_url": "/uploads/1780918882852-892904652-IMG_20241027_WA0026.jpg",
+    "pere_id": "1",
+    "mere_id": "2",
+    "conjoint_id": "9",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "9",
+    "prenom": "Maholiarisoa Heriniaina",
+    "nom": "JEAMIS",
+    "sexe": "M",
+    "photo_url": "/uploads/1780918854046-401181830-me.jpg",
+    "conjoint_id": "8",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "10",
+    "prenom": "Aroniaina Mathyas",
+    "nom": "JEAMIS-RAZANAKOLONA",
+    "sexe": "M",
+    "photo_url": "/uploads/1780918915741-548023208-Mathyas.png",
+    "pere_id": "9",
+    "mere_id": "8",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "11",
+    "prenom": "Ariniaina Warren",
+    "nom": "JEAMIS-RAZANAKOLONA",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "pere_id": "9",
+    "mere_id": "8",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "12",
+    "prenom": "Andoniaina",
+    "nom": "ANDRIAMASITERA",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "pere_id": "1",
+    "mere_id": "2",
+    "conjoint_id": "13",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "13",
+    "prenom": "Maherizo",
+    "nom": "ANDRIANJATOVO",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "conjoint_id": "12",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "14",
+    "prenom": "Nayah",
+    "nom": "",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "pere_id": "13",
+    "mere_id": "12",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "15",
+    "prenom": "Andriniaina",
+    "nom": "RAZANAKOLONA ANDRIAMASITERA",
+    "sexe": "F",
+    "photo_url": "/uploads/default-f.jpg",
+    "pere_id": "1",
+    "mere_id": "2",
+    "conjoint_id": "16",
+    "date_naissance": "",
+    "lieu_naissance": ""
+  },
+  {
+    "id": "16",
+    "prenom": "Adyl",
+    "nom": "LERY",
+    "sexe": "M",
+    "photo_url": "/uploads/default-m.jpg",
+    "conjoint_id": "15",
+    "date_naissance": "",
+    "lieu_naissance": ""
   }
 ];
 
@@ -205,7 +311,15 @@ async function demarrerServeur() {
 
       let photoPath = "";
       if (req.file) {
-        photoPath = `/uploads/${req.file.filename}`;
+        try {
+          const fileBuffer = fs.readFileSync(req.file.path);
+          photoPath = `data:${req.file.mimetype};base64,${fileBuffer.toString("base64")}`;
+          // Supprimer le fichier temporaire immédiatement pour garder le disque propre
+          fs.unlinkSync(req.file.path);
+        } catch (fileErr) {
+          console.error("Erreur d'encodage du fichier en Base64 :", fileErr);
+          photoPath = `/uploads/${req.file.filename}`;
+        }
       }
 
       const nouveauMembre: Membre = {
@@ -262,7 +376,15 @@ async function demarrerServeur() {
       
       let photo_url = membreExistant.photo_url;
       if (req.file) {
-        photo_url = `/uploads/${req.file.filename}`;
+        try {
+          const fileBuffer = fs.readFileSync(req.file.path);
+          photo_url = `data:${req.file.mimetype};base64,${fileBuffer.toString("base64")}`;
+          // Supprimer le fichier temporaire immédiatement pour garder le disque propre
+          fs.unlinkSync(req.file.path);
+        } catch (fileErr) {
+          console.error("Erreur d'encodage du fichier en Base64 :", fileErr);
+          photo_url = `/uploads/${req.file.filename}`;
+        }
       } else if (body.photo_url === "") {
         photo_url = undefined;
       }

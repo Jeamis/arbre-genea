@@ -83,12 +83,75 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
     setError(null);
   }, [mode, selectedMember]);
 
+  // Compresse et redimensionne une image côté client avant envoi
+  const compressImageToBlob = (file: File): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxWidth = 300;
+          const maxHeight = 300;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            resolve(file); // Fallback si le canvas n'est pas disponible
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              resolve(blob || file);
+            },
+            "image/jpeg",
+            0.7
+          );
+        };
+        img.onerror = () => resolve(file);
+      };
+      reader.onerror = () => resolve(file);
+    });
+  };
+
   // Gérer la sélection de photo
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setPhotoFile(file);
-      setPhotoPreview(URL.createObjectURL(file));
+      setPhotoPreview(URL.createObjectURL(file)); // Prévisualisation instantanée
+
+      try {
+        setError(null);
+        const compressedBlob = await compressImageToBlob(file);
+        // Conserver sous forme de fichier nommable pour que Multer comprenne que c'est un JPG
+        const compressedFile = new File([compressedBlob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+          type: "image/jpeg"
+        });
+        setPhotoFile(compressedFile);
+      } catch (err) {
+        console.warn("Échec de compression, utilisation du fichier d'origine :", err);
+        setPhotoFile(file);
+      }
     }
   };
 

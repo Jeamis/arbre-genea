@@ -126,12 +126,32 @@ export default function App() {
     try {
       setLoading(true);
       setErrorDefault(null);
+
+      // On vérifie en priorité absolue si l'utilisateur possède déjà ses données familiales personnalisées
+      // stockées localement dans son navigateur (LocalStorage) afin d'éviter que le serveur Express stateless
+      // (notamment sur Vercel, où la persistance disque de membres.json n'existe pas) ne vienne écraser ses modifications (photos, naissances)
+      const localData = localStorage.getItem("family_members");
+      if (localData) {
+        try {
+          const parsed = JSON.parse(localData);
+          if (parsed && parsed.length > 0) {
+            setMembers(parsed);
+            setUsingLocalState(true);
+            setLoading(false);
+            return;
+          }
+        } catch (parseErr) {
+          console.warn("Échec de parsing du LocalStorage, basculement vers l'API.");
+        }
+      }
+
       const res = await fetch("/api/membres");
       if (!res.ok) {
         throw new Error("Impossible de charger les membres via l'API.");
       }
       const data = await res.json();
       setMembers(data);
+      localStorage.setItem("family_members", JSON.stringify(data));
       setUsingLocalState(false);
     } catch (err: any) {
       console.warn("API Express non disponible (Vercel/Static). Basculement en mode stockage LocalStorage.");
@@ -191,13 +211,51 @@ export default function App() {
     setPanelMode("edit");
   };
 
-  // Convertit un fichier File en chaîne Base64 pour persister les photos en mode LocalStorage
-  const fileToBase64 = (file: File): Promise<string> => {
+  // Compresse et convertit une image en Base64 optimisé pour tenir dans le LocalStorage (Vercel) sans saturer l'espace de stockage
+  const compressAndEncodeImage = (file: File, maxWidth = 300, maxHeight = 300): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (err) => reject(err);
       reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+
+          // Calcul des dimensions proportionnelles
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            resolve(event.target?.result as string);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Exporter au format JPEG avec une bonne compression (70% de qualité)
+          // Idéal pour les photos de profil (taille finale ~10 à 25 Ko au lieu de plusieurs Mo)
+          const base64 = canvas.toDataURL("image/jpeg", 0.7);
+          resolve(base64);
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
     });
   };
 
@@ -217,7 +275,7 @@ export default function App() {
       let photo_url = selectedMember?.photo_url;
       if (photoFile && photoFile.name && photoFile.size > 0) {
         try {
-          photo_url = await fileToBase64(photoFile);
+          photo_url = await compressAndEncodeImage(photoFile);
         } catch (err) {
           console.error("Erreur d'encodage de l'image de profil :", err);
         }
